@@ -91,12 +91,12 @@ class _FirebaseAppState extends State<FirebaseApp> {
             ),
             ElevatedButton(
               onPressed: () {
-                // var firestore = FirebaseFirestore.instance
-                //     .collection('users')
-                //     .doc('my_doc');
-                // firestore.update({
-                //   'name': "chuma",
-                // });
+                var firestore = FirebaseFirestore.instance
+                    .collection('users')
+                    .doc('my_doc');
+                firestore.update({
+                  'name': "chuma",
+                });
               },
               child: const Text('Update'),
             ),
@@ -105,10 +105,10 @@ class _FirebaseAppState extends State<FirebaseApp> {
             ),
             ElevatedButton(
               onPressed: () {
-                // var firestore = FirebaseFirestore.instance
-                //     .collection('users')
-                //     .doc('my_doc');
-                // firestore.delete();
+                var firestore = FirebaseFirestore.instance
+                    .collection('users')
+                    .doc('my_doc');
+                firestore.delete();
               },
               child: const Text('Delete'),
             ),
