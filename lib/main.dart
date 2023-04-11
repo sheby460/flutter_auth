@@ -3,9 +3,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/firebase_options.dart';
 
+
+Future<void>backgroundHendler(RemoteMessege message) async{
+  print("$(message.data)");
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+    );
+      FirebaseMessaging.onBackgroungMessage(backgroungHendler);
+
   runApp(const MyApp());
 }
 
@@ -33,7 +42,35 @@ class FirebaseApp extends StatefulWidget {
 }
 
 class _FirebaseAppState extends State<FirebaseApp> {
-  var name = "";
+ 
+   @override
+  void initState(){
+   //when app is terminated.
+   FirebaseMessaging.instance.getInitialMessage().then((message){
+    if(message != null){
+      print("new notification");
+    }
+   });
+
+   // when app is on foreground
+   FirebaseMessaging.onMessage.listen((message) {
+    if(message.notification != null){
+      print(message.notification.title);
+      print(message.notification.bbody);
+    }
+   });
+
+   // when app is on background but not terminated
+   FirebaseMessaging.onMessageOpenedApp.listen((message){
+    print("app is running on background");
+     if(message.notification != null){
+      print(message.notification.title);
+      print(message.notification..body);
+     }
+   })
+   super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
